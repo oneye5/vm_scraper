@@ -16,13 +16,14 @@ int main()
 
     input->inputString("\nhello, how are you, i am under the water, please help me, here too much raining :(\n");
 
-    input->addMousePosition(900,900);
+    input->setMousePosition(0,0);
+    usleep(100000);
+    input->setMousePosition(600,600);
     usleep(100000);
     input->addMousePosition(100,100);
     usleep(100000);
-    input->addMousePosition(900,900);
-    usleep(100000);
     input->addMousePosition(100,100);
+
 
     delete(input);
 

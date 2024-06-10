@@ -41,13 +41,21 @@ public:
         ev.type = type;
         ev.code = code;
         ev.value = value;
-        write(fd, &ev, sizeof(ev));
+        if (write(fd, &ev, sizeof(ev)) < 0) {
+            std::cerr << "Error writing mouse event: " << strerror(errno) << std::endl;
+            close(fd);
+            exit(-1);
+        }
 
         // Send the sync event to ensure the change is registered.
         ev.type = EV_SYN;
         ev.code = SYN_REPORT;
         ev.value = 0;
-        write(fd, &ev, sizeof(ev));
+        if (write(fd, &ev, sizeof(ev)) < 0) {
+            std::cerr << "Error writing sync event: " << strerror(errno) << std::endl;
+            close(fd);
+            exit(-1);
+        }
     }
     void quickPress(int keyCode) const
     {
@@ -63,49 +71,52 @@ public:
     }
     void setMousePosition(int screenX,int screenY) const
     {
+        std::cout << "setting mouse pos\n";
         sendMouseEvent(EV_ABS, ABS_X, screenX);
         sendMouseEvent(EV_ABS, ABS_Y, screenY);
     }
-    void addMousePosition(int screenX,int screenY) const
+    void addMousePosition(int deltaX,int deltaY) const
     {
-        sendMouseEvent(EV_REL , REL_Y , screenX);
-        sendMouseEvent(EV_REL , REL_X , screenY);
+        std::cout << "adding mouse pos\n";
+        sendMouseEvent(EV_REL, REL_X, deltaX);
+        sendMouseEvent(EV_REL, REL_Y, deltaY);
     }
     InputHandler()
     {
         fd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
-        if (fd < 0)
-        {
-            std::cerr << "Error opening /dev/uinput: " << strerror(errno) << std::endl;
-            exit(-1);
-        }
+        if (fd < 0){std::cerr << "Error opening /dev/uinput: " << strerror(errno) << std::endl; exit(-1);} //check for error
 
-        if (ioctl(fd, UI_SET_EVBIT, EV_KEY) < 0) {
-            std::cerr << "Error setting EV_KEY: " << strerror(errno) << std::endl;
-            close(fd);
-            exit(-1);
-        }
-
+        ioctl(fd, UI_SET_EVBIT, EV_KEY);
+        //enable sync
+        ioctl(fd, UI_SET_EVBIT, EV_SYN);
         // Enable all keys made available by char to key code
         for(auto mapped_key_code : CHAR_KEYCODE_MAP)
             ioctl(fd, UI_SET_KEYBIT, mapped_key_code.second);
 
+        //enable mouse stuff
         ioctl(fd, UI_SET_EVBIT, EV_REL); // Enable relative events (for mouse movement)
         ioctl(fd, UI_SET_RELBIT, REL_X); // Enable X-axis movement
         ioctl(fd, UI_SET_RELBIT, REL_Y); // Enable Y-axis movement
 
         ioctl(fd, UI_SET_EVBIT, EV_ABS); // Enable non relative
-        ioctl(fd, UI_SET_RELBIT, EV_ABS); // Enable X-axis movement
-        ioctl(fd, UI_SET_RELBIT, EV_ABS); // Enable Y-axis movement
-
-
+        ioctl(fd, UI_SET_ABSBIT, ABS_Y); // Enable X-axis movement
+        ioctl(fd, UI_SET_ABSBIT, ABS_X); // Enable Y-axis movement
 
         memset(&uidev, 0, sizeof(uidev));
         snprintf(uidev.name, UINPUT_MAX_NAME_SIZE, "uinput-sample");
+
         uidev.id.bustype = BUS_USB;
         uidev.id.vendor = 0x1234;
         uidev.id.product = 0x5678;
         uidev.id.version = 1;
+
+
+        //bounds
+        uidev.absmin[ABS_X] = 0;
+        uidev.absmax[ABS_X] = 1920;
+        uidev.absmin[ABS_Y] = 0;
+        uidev.absmax[ABS_Y] = 1080;
+
 
         if (write(fd, &uidev, sizeof(uidev)) < 0) {
             std::cerr << "Error writing device information: " << strerror(errno) << std::endl;
