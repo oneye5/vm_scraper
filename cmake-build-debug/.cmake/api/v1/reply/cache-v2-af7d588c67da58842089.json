@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/one/CLionProjects/paksaveGetter/cmake-build-debug"
+			"value" : "/home/one/CLionProjects/input_putter/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -543,7 +543,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/one/CLionProjects/paksaveGetter/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -603,7 +603,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/one/CLionProjects/paksaveGetter"
+			"value" : "/home/one/CLionProjects/input_putter"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -843,7 +843,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "paksaveGetter"
+			"value" : "input_putter"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1154,7 +1154,7 @@
 			"value" : "TRUE"
 		},
 		{
-			"name" : "paksaveGetter_BINARY_DIR",
+			"name" : "input_putter_BINARY_DIR",
 			"properties" : 
 			[
 				{
@@ -1163,10 +1163,10 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/one/CLionProjects/paksaveGetter/cmake-build-debug"
+			"value" : "/home/one/CLionProjects/input_putter/cmake-build-debug"
 		},
 		{
-			"name" : "paksaveGetter_IS_TOP_LEVEL",
+			"name" : "input_putter_IS_TOP_LEVEL",
 			"properties" : 
 			[
 				{
@@ -1178,7 +1178,7 @@
 			"value" : "ON"
 		},
 		{
-			"name" : "paksaveGetter_SOURCE_DIR",
+			"name" : "input_putter_SOURCE_DIR",
 			"properties" : 
 			[
 				{
@@ -1187,7 +1187,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/one/CLionProjects/paksaveGetter"
+			"value" : "/home/one/CLionProjects/input_putter"
 		}
 	],
 	"kind" : "cache",

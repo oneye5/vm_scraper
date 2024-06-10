@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "paksaveGetter"
+			"path" : "input_putter"
 		}
 	],
 	"backtrace" : 1,
@@ -53,7 +53,7 @@
 			]
 		}
 	],
-	"id" : "paksaveGetter::@6890427a1f51a3e7e1df",
+	"id" : "input_putter::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -69,8 +69,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "paksaveGetter",
-	"nameOnDisk" : "paksaveGetter",
+	"name" : "input_putter",
+	"nameOnDisk" : "input_putter",
 	"paths" : 
 	{
 		"build" : ".",
