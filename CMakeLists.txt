@@ -4,6 +4,6 @@ project(input_putter)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(input_putter main.cpp
-        inputHandler.h
+        automation.h
         CharToKeyCode.h)
 

@@ -79,7 +79,8 @@
                     {'/',  KEY_SLASH},
                     {'?',  KEY_SLASH},
                     // SPECIAL KEYS =======================================
-                    {'\0', KEY_LEFTCTRL}
+                    {'\t', KEY_LEFTCTRL},
+                    {'\b', KEY_BACKSPACE}
             };
 
     int char_to_keycode(const char in) //gives the keycode equivalent of the character

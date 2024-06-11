@@ -104,7 +104,7 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "inputHandler.h",
+			"path" : "automation.h",
 			"sourceGroupIndex" : 1
 		},
 		{

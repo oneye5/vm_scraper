@@ -1,3 +1,9 @@
+//=======================================================================================
+//
+//  THIS IS ONLY INTENDED TO BE USED ON LINUX SYSTEMS, OR VIRTUAL MACHINES
+//  THE MOUSE FUNCTIONALITY DOES NOT WORK WITHOUT INSTALLING xdotool
+//
+//=======================================================================================
 #include <linux/uinput.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -7,9 +13,9 @@
 #include "CharToKeyCode.h"
 #include <cstdlib>
 
+#define POST_INPUT_DELAY() usleep(10000); //.01s delay
 
-
-class InputHandler
+class automation
 {
     int fd;
     uinput_user_dev uidev{};
@@ -39,27 +45,46 @@ public:
     }
     void quickPress(int keyCode) const
     {
-        usleep(10000); // 0.01 second
         setKey(keyCode, 1); // Press
-        usleep(10000); // 0.01 second
+        POST_INPUT_DELAY()
         setKey(keyCode, 0); // Release
+        POST_INPUT_DELAY()
     }
     void inputString(std::string in) const
     {
         for (int i = 0; i < in.length(); i++)
             quickPress( char_to_keycode(in.at(i)) );
     }
+    void leftClick()
+    {
+        system("xdotool click 1");
+        std::cout<<"\nclicked at ";
+        std::cout<<system("xdotool getmouselocation") << "\n";
+        POST_INPUT_DELAY()
+    }
     void setMousePosition(int x = 0, int y = 0 ) const
     {
-        system(  ("xdotool mousemove " + std::to_string(x) + " " + std::to_string(y)).c_str());
+        system(("xdotool mousemove " + std::to_string(x) + " " + std::to_string(y)).c_str());
+        POST_INPUT_DELAY()
     }
     void changeMousePosition(int x = 0, int y = 0)
     {
         std::cout<<"mouse pos after move: " << system("xdotool getmouselocation") << "\n";
         system(  ("xdotool mousemove_relative " + std::to_string(x) + " " + std::to_string(y)).c_str());
         std::cout<<"mouse pos before move: " << system("xdotool getmouselocation") << "\n";
+        POST_INPUT_DELAY()
     }
-    InputHandler()
+    void forkAndRunCmd(std::string in)
+    {
+        auto pid = fork();
+        if(pid == 0)
+        {
+            system(in.c_str());
+            exit(0);
+        }
+    }
+
+    automation()
     {
         //get screen dimensions for mouse input
 
@@ -104,7 +129,7 @@ public:
             exit(-1);
         }
     }
-    ~InputHandler()
+    ~automation()
     {
         if (ioctl(fd, UI_DEV_DESTROY) < 0) {
             std::cerr << "Error destroying uinput device: " << strerror(errno) << std::endl;
