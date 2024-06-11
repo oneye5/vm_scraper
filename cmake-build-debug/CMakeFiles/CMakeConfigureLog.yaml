@@ -471,3 +471,137 @@ events:
       
       
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/clion-2024.1.2/bin/cmake/linux/x64/share/cmake-3.28/Modules/CheckLibraryExists.cmake:69 (try_compile)"
+      - "/opt/clion-2024.1.2/bin/cmake/linux/x64/share/cmake-3.28/Modules/FindX11.cmake:682 (check_library_exists)"
+      - "CMakeLists.txt:6 (find_package)"
+    checks:
+      - "Looking for XOpenDisplay in /usr/lib64/libX11.so;/usr/lib64/libXext.so"
+    directories:
+      source: "/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LdmgI1"
+      binary: "/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LdmgI1"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "X11_LIB_X11_SOLO"
+      cached: true
+      stdout: |
+        Change Dir: '/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LdmgI1'
+        
+        Run Build Command(s): /opt/clion-2024.1.2/bin/ninja/linux/x64/ninja -v cmTC_6ca3a
+        [1/2] /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=XOpenDisplay -fdiagnostics-color=always -o CMakeFiles/cmTC_6ca3a.dir/CheckFunctionExists.c.o -c /home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LdmgI1/CheckFunctionExists.c
+        [2/2] : && /usr/bin/cc -DCHECK_FUNCTION_EXISTS=XOpenDisplay  CMakeFiles/cmTC_6ca3a.dir/CheckFunctionExists.c.o -o cmTC_6ca3a  /usr/lib64/libX11.so  /usr/lib64/libXext.so && :
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/clion-2024.1.2/bin/cmake/linux/x64/share/cmake-3.28/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "/opt/clion-2024.1.2/bin/cmake/linux/x64/share/cmake-3.28/Modules/FindX11.cmake:697 (check_function_exists)"
+      - "CMakeLists.txt:6 (find_package)"
+    checks:
+      - "Looking for gethostbyname"
+    directories:
+      source: "/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-L4rzPn"
+      binary: "/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-L4rzPn"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_HAVE_GETHOSTBYNAME"
+      cached: true
+      stdout: |
+        Change Dir: '/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-L4rzPn'
+        
+        Run Build Command(s): /opt/clion-2024.1.2/bin/ninja/linux/x64/ninja -v cmTC_96b9b
+        [1/2] /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=gethostbyname -fdiagnostics-color=always -o CMakeFiles/cmTC_96b9b.dir/CheckFunctionExists.c.o -c /home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-L4rzPn/CheckFunctionExists.c
+        [2/2] : && /usr/bin/cc -DCHECK_FUNCTION_EXISTS=gethostbyname  CMakeFiles/cmTC_96b9b.dir/CheckFunctionExists.c.o -o cmTC_96b9b   && :
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/clion-2024.1.2/bin/cmake/linux/x64/share/cmake-3.28/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "/opt/clion-2024.1.2/bin/cmake/linux/x64/share/cmake-3.28/Modules/FindX11.cmake:711 (check_function_exists)"
+      - "CMakeLists.txt:6 (find_package)"
+    checks:
+      - "Looking for connect"
+    directories:
+      source: "/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-f5naL3"
+      binary: "/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-f5naL3"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_HAVE_CONNECT"
+      cached: true
+      stdout: |
+        Change Dir: '/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-f5naL3'
+        
+        Run Build Command(s): /opt/clion-2024.1.2/bin/ninja/linux/x64/ninja -v cmTC_93767
+        [1/2] /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=connect -fdiagnostics-color=always -o CMakeFiles/cmTC_93767.dir/CheckFunctionExists.c.o -c /home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-f5naL3/CheckFunctionExists.c
+        [2/2] : && /usr/bin/cc -DCHECK_FUNCTION_EXISTS=connect  CMakeFiles/cmTC_93767.dir/CheckFunctionExists.c.o -o cmTC_93767   && :
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/clion-2024.1.2/bin/cmake/linux/x64/share/cmake-3.28/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "/opt/clion-2024.1.2/bin/cmake/linux/x64/share/cmake-3.28/Modules/FindX11.cmake:720 (check_function_exists)"
+      - "CMakeLists.txt:6 (find_package)"
+    checks:
+      - "Looking for remove"
+    directories:
+      source: "/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-UAQgp3"
+      binary: "/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-UAQgp3"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_HAVE_REMOVE"
+      cached: true
+      stdout: |
+        Change Dir: '/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-UAQgp3'
+        
+        Run Build Command(s): /opt/clion-2024.1.2/bin/ninja/linux/x64/ninja -v cmTC_dbc5d
+        [1/2] /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=remove -fdiagnostics-color=always -o CMakeFiles/cmTC_dbc5d.dir/CheckFunctionExists.c.o -c /home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-UAQgp3/CheckFunctionExists.c
+        [2/2] : && /usr/bin/cc -DCHECK_FUNCTION_EXISTS=remove  CMakeFiles/cmTC_dbc5d.dir/CheckFunctionExists.c.o -o cmTC_dbc5d   && :
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/clion-2024.1.2/bin/cmake/linux/x64/share/cmake-3.28/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "/opt/clion-2024.1.2/bin/cmake/linux/x64/share/cmake-3.28/Modules/FindX11.cmake:729 (check_function_exists)"
+      - "CMakeLists.txt:6 (find_package)"
+    checks:
+      - "Looking for shmat"
+    directories:
+      source: "/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-QEHbvB"
+      binary: "/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-QEHbvB"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_HAVE_SHMAT"
+      cached: true
+      stdout: |
+        Change Dir: '/home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-QEHbvB'
+        
+        Run Build Command(s): /opt/clion-2024.1.2/bin/ninja/linux/x64/ninja -v cmTC_e3f55
+        [1/2] /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=shmat -fdiagnostics-color=always -o CMakeFiles/cmTC_e3f55.dir/CheckFunctionExists.c.o -c /home/one/CLionProjects/input_putter/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-QEHbvB/CheckFunctionExists.c
+        [2/2] : && /usr/bin/cc -DCHECK_FUNCTION_EXISTS=shmat  CMakeFiles/cmTC_e3f55.dir/CheckFunctionExists.c.o -o cmTC_e3f55   && :
+        
+      exitCode: 0
+...
