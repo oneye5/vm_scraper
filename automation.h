@@ -3,6 +3,9 @@
 //  THIS IS ONLY INTENDED TO BE USED ON LINUX SYSTEMS, OR VIRTUAL MACHINES
 //  THE MOUSE FUNCTIONALITY DOES NOT WORK WITHOUT INSTALLING xdotool
 //
+//  ! DEPENDENCIES !
+//   xdotool
+//   xsel
 //=======================================================================================
 #include <linux/uinput.h>
 #include <fcntl.h>
@@ -12,6 +15,8 @@
 #include <cerrno>
 #include "CharToKeyCode.h"
 #include <cstdlib>
+#include <memory>
+#include <array>
 
 #define POST_INPUT_DELAY() usleep(10000); //.01s delay
 
@@ -67,14 +72,14 @@ public:
         system(("xdotool mousemove " + std::to_string(x) + " " + std::to_string(y)).c_str());
         POST_INPUT_DELAY()
     }
-    void changeMousePosition(int x = 0, int y = 0)
+    void changeMousePosition(int x = 0, int y = 0) const
     {
         std::cout<<"mouse pos after move: " << system("xdotool getmouselocation") << "\n";
         system(  ("xdotool mousemove_relative " + std::to_string(x) + " " + std::to_string(y)).c_str());
         std::cout<<"mouse pos before move: " << system("xdotool getmouselocation") << "\n";
         POST_INPUT_DELAY()
     }
-    void forkAndRunCmd(std::string in)
+    void forkAndRunCmd(std::string in) const
     {
         auto pid = fork();
         if(pid == 0)
@@ -83,9 +88,34 @@ public:
             exit(0);
         }
     }
+    void copyPage() const
+    {
+        setKey(KEY_LEFTCTRL,1);
+        quickPress(KEY_A);
+        quickPress(KEY_C);
+        setKey(KEY_LEFTCTRL,0);
+    }
+    std::string getClipboardContent() const
+    {
+        std::string command = "xsel --output --clipboard";
+        FILE* pipe = popen(command.c_str(), "r");
+
+        std::string clipboardContent = "";
+        char buffer[2048];
+        while (fgets(buffer, 2048, pipe) != NULL) {
+            clipboardContent += buffer;
+        }
+        pclose(pipe);
+        return clipboardContent;
+    }
 
     automation()
     {
+        setenv("XDG_RUNTIME_DIR", "/run/user/1000", 0);
+        setenv("DISPLAY", ":0", 0);
+
+
+
         //get screen dimensions for mouse input
 
         //setup virtual input device for keyboard events
