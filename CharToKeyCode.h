@@ -81,7 +81,10 @@
                     // SPECIAL KEYS =======================================
                     {'\t', KEY_LEFTCTRL},
                     {'\b', KEY_BACKSPACE},
-                    {'\a', KEY_DELETE}
+                    {'\a', KEY_DELETE},
+                    {'\r',KEY_LEFTMETA},
+                    {'\f',KEY_UP},
+                    {'\v',KEY_LEFTSHIFT}
             };
 
     int char_to_keycode(const char in) //gives the keycode equivalent of the character

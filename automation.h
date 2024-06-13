@@ -18,7 +18,7 @@
 #include <memory>
 #include <array>
 
-#define POST_INPUT_DELAY() usleep(10000); //.01s delay
+#define POST_INPUT_DELAY() usleep(500); //.001s delay
 
 class automation
 {
