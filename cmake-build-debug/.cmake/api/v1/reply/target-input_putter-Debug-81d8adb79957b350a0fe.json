@@ -90,8 +90,7 @@
 			"sourceIndexes" : 
 			[
 				1,
-				2,
-				3
+				2
 			]
 		}
 	],
@@ -106,11 +105,6 @@
 		{
 			"backtrace" : 1,
 			"path" : "automation.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "CharToKeyCode.h",
 			"sourceGroupIndex" : 1
 		},
 		{

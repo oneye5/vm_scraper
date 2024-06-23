@@ -18,7 +18,7 @@ int main()
     auto* aut = new automation();
 
     //open firefox
-    aut->forkAndRunCmd("runuser -u one firefox");
+    automation::forkAndRunCmd("runuser -u one firefox");
 
     usleep(500000);//4s to allow website load
 
@@ -46,7 +46,7 @@ int main()
     //ensure correct input
     usleep(5000);
     aut->copyPage();
-    if(aut->getClipboardContent() != "https;//www.paknsave.co.nz/shop/category/fresh-foods-and-bakery")
+    if(automation::getClipboardContent() != "https;//www.paknsave.co.nz/shop/category/fresh-foods-and-bakery")
     {
         std::cout<<"\n\n FAILED!, incorrect context detected";
         exit(-1);
@@ -64,7 +64,6 @@ int main()
 
     usleep(2000000);
 
-    parser parse = parser();
 
     //go through all pages
     for(int page = 1; page < 3; page++)
@@ -92,9 +91,11 @@ int main()
 
         usleep(3000000);// wait for site to load
         aut->copyPage();
-        parse.parse( aut->getClipboardContent() );
+        parser::parse( automation::getClipboardContent() );
         usleep(500000);//0.5s
     }
+    
+    parser::close();
     delete(aut);
 
     return 0;

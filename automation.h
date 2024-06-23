@@ -3,6 +3,8 @@
 //  THIS IS ONLY INTENDED TO BE USED ON LINUX SYSTEMS, OR VIRTUAL MACHINES
 //  THE MOUSE FUNCTIONALITY DOES NOT WORK WITHOUT INSTALLING xdotool
 //
+//  MUST BE RUN WITH SUDO
+//
 //  ! DEPENDENCIES !
 //   xdotool
 //   xsel
@@ -13,10 +15,38 @@
 #include <iostream>
 #include <cstring>
 #include <cerrno>
-#include "CharToKeyCode.h"
+//#include "CharToKeyCode.h"
 #include <cstdlib>
 #include <memory>
 #include <array>
+#include <unordered_map>
+
+#pragma region char_to_keycode
+const std::unordered_map<char, int> CHAR_KEYCODE_MAP =
+        {       // STANDARD KEYS ========================================
+                {'a',  KEY_A},{'b',  KEY_B},{'c',  KEY_C},{'d',  KEY_D},{'e',  KEY_E},{'f',  KEY_F},{'g',  KEY_G},{'h',  KEY_H},{'i',  KEY_I},{'j',  KEY_J},{'k',  KEY_K},{'l',  KEY_L},{'m',  KEY_M},{'n',  KEY_N},{'o',  KEY_O},{'p',  KEY_P},{'q',  KEY_Q},{'r',  KEY_R},{'s',  KEY_S},{'t',  KEY_T},
+                {'u',  KEY_U},{'v',  KEY_V},{'w',  KEY_W},{'x',  KEY_X},{'y',  KEY_Y},{'z',  KEY_Z},{'0',  KEY_0},{'1',  KEY_1},{'2',  KEY_2},{'3',  KEY_3},{'4',  KEY_4},{'5',  KEY_5},{'6',  KEY_6},{'7',  KEY_7},{'8',  KEY_8},{'9',  KEY_9},{' ',  KEY_SPACE},{'\n', KEY_ENTER},{'!',  KEY_1},{'@',  KEY_2},
+                {'#',  KEY_3},{'$',  KEY_4},{'%',  KEY_5},{'^',  KEY_6},{'&',  KEY_7},{'*',  KEY_8},{'(',  KEY_9},{')',  KEY_0},{'-',  KEY_MINUS},{'_',  KEY_MINUS},{'=',  KEY_EQUAL},{'+',  KEY_EQUAL},{'[',  KEY_LEFTBRACE},{']',  KEY_RIGHTBRACE},{'{',  KEY_LEFTBRACE},{'}',  KEY_RIGHTBRACE},{';',  KEY_SEMICOLON},{':',  KEY_SEMICOLON},{'\'', KEY_APOSTROPHE},{'"',  KEY_APOSTROPHE},
+                {'`',  KEY_GRAVE},{'~',  KEY_GRAVE},{'\\', KEY_BACKSLASH},{'|',  KEY_BACKSLASH},{',',  KEY_COMMA},{'<',  KEY_COMMA},{'.',  KEY_DOT},{'>',  KEY_DOT},{'/',  KEY_SLASH},{'?',  KEY_SLASH},
+                // SPECIAL KEYS =======================================
+                {'\t', KEY_LEFTCTRL},
+                {'\b', KEY_BACKSPACE},
+                {'\a', KEY_DELETE},
+                {'\r',KEY_LEFTMETA},
+                {'\f',KEY_UP},
+                {'\v',KEY_LEFTSHIFT}
+        };
+
+inline int char_to_keycode(const char in) //gives the keycode equivalent of the character
+{
+    auto it = CHAR_KEYCODE_MAP.find(in);
+    if (it != CHAR_KEYCODE_MAP.end())
+        return it->second;
+    else
+        throw std::out_of_range("Character not found in keycode map");
+
+}
+#pragma endregion
 
 #define POST_INPUT_DELAY() usleep(500); //.001s delay
 
@@ -28,7 +58,7 @@ class automation
 public:
     void setKey(int keycode, int value) const
     {
-        input_event ev;
+        input_event ev = {};
         memset(&ev, 0, sizeof(ev));
         ev.type = EV_KEY;
         ev.code = keycode;
@@ -48,38 +78,34 @@ public:
             exit(-1);
         }
     }
-    void quickPress(int keyCode) const
+    inline void quickPress(int keyCode) const
     {
         setKey(keyCode, 1); // Press
         POST_INPUT_DELAY()
         setKey(keyCode, 0); // Release
         POST_INPUT_DELAY()
     }
-    void inputString(std::string in) const
+    inline void inputString(const std::string& in) const
     {
         for (int i = 0; i < in.length(); i++)
             quickPress( char_to_keycode(in.at(i)) );
     }
-    void leftClick()
+    inline void leftClick() const
     {
         system("xdotool click 1");
-        std::cout<<"\nclicked at ";
-        std::cout<<system("xdotool getmouselocation") << "\n";
         POST_INPUT_DELAY()
     }
-    void setMousePosition(int x = 0, int y = 0 ) const
+    inline void setMousePosition(int x = 0, int y = 0 ) const
     {
         system(("xdotool mousemove " + std::to_string(x) + " " + std::to_string(y)).c_str());
         POST_INPUT_DELAY()
     }
-    void changeMousePosition(int x = 0, int y = 0) const
+    inline void changeMousePosition(int x = 0, int y = 0) const
     {
-        std::cout<<"mouse pos after move: " << system("xdotool getmouselocation") << "\n";
         system(  ("xdotool mousemove_relative " + std::to_string(x) + " " + std::to_string(y)).c_str());
-        std::cout<<"mouse pos before move: " << system("xdotool getmouselocation") << "\n";
         POST_INPUT_DELAY()
     }
-    void forkAndRunCmd(std::string in) const
+    static void forkAndRunCmd(const std::string& in)
     {
         auto pid = fork();
         if(pid == 0)
@@ -88,21 +114,22 @@ public:
             exit(0);
         }
     }
-    void copyPage() const
+    inline void copyPage() const
     {
         setKey(KEY_LEFTCTRL,1);
         quickPress(KEY_A);
         quickPress(KEY_C);
         setKey(KEY_LEFTCTRL,0);
     }
-    std::string getClipboardContent() const
+
+    static std::string getClipboardContent()
     {
         std::string command = "xsel --output --clipboard";
         FILE* pipe = popen(command.c_str(), "r");
 
-        std::string clipboardContent = "";
+        std::string clipboardContent;
         char buffer[2048];
-        while (fgets(buffer, 2048, pipe) != NULL) {
+        while (fgets(buffer, 2048, pipe) != nullptr) {
             clipboardContent += buffer;
         }
         pclose(pipe);
@@ -168,3 +195,4 @@ public:
         close(fd);
     }
 };
+
